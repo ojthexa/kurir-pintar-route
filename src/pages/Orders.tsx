@@ -89,62 +89,62 @@ const Orders = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
-              <ArrowLeft className="h-5 w-5" />
+        <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center gap-2">
+          <div className="flex items-center gap-2 md:gap-4 min-w-0 flex-1">
+            <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="shrink-0">
+              <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
-            <h1 className="text-2xl font-bold">Kelola Pesanan</h1>
+            <h1 className="text-lg md:text-2xl font-bold truncate">Kelola Pesanan</h1>
           </div>
-          <Button onClick={() => navigate("/orders/new")}>
-            <Plus className="h-4 w-4 mr-2" />
-            Pesanan Baru
+          <Button onClick={() => navigate("/orders/new")} size="sm" className="shrink-0">
+            <Plus className="h-4 w-4 md:mr-2" />
+            <span className="hidden md:inline">Pesanan Baru</span>
           </Button>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-4 md:py-8">
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">Memuat pesanan...</p>
+            <p className="text-sm md:text-base text-muted-foreground">Memuat pesanan...</p>
           </div>
         ) : orders.length === 0 ? (
-          <Card className="text-center py-12">
-            <CardContent className="space-y-4">
-              <Package className="h-16 w-16 mx-auto text-muted-foreground" />
+          <Card className="text-center py-8 md:py-12">
+            <CardContent className="space-y-4 p-4 md:p-6">
+              <Package className="h-12 w-12 md:h-16 md:w-16 mx-auto text-muted-foreground" />
               <div>
-                <h3 className="text-lg font-semibold">Belum ada pesanan</h3>
-                <p className="text-muted-foreground">Mulai dengan membuat pesanan pertama Anda</p>
+                <h3 className="text-base md:text-lg font-semibold">Belum ada pesanan</h3>
+                <p className="text-sm md:text-base text-muted-foreground">Mulai dengan membuat pesanan pertama Anda</p>
               </div>
-              <Button onClick={() => navigate("/orders/new")}>
+              <Button onClick={() => navigate("/orders/new")} size="sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Buat Pesanan Baru
               </Button>
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-3 md:gap-4">
             {orders.map((order) => (
               <Card key={order.id} className="shadow-lg hover:shadow-xl transition-shadow cursor-pointer">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">{order.order_number}</CardTitle>
-                      <p className="text-sm text-muted-foreground mt-1">{order.pickup_address}</p>
+                <CardHeader className="p-4 md:p-6">
+                  <div className="flex justify-between items-start gap-2">
+                    <div className="min-w-0 flex-1">
+                      <CardTitle className="text-base md:text-lg truncate">{order.order_number}</CardTitle>
+                      <p className="text-xs md:text-sm text-muted-foreground mt-1 line-clamp-2">{order.pickup_address}</p>
                     </div>
                     {getStatusBadge(order.status)}
                   </div>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <div className="space-y-1">
-                      <p className="text-sm text-muted-foreground">Jenis: {order.delivery_type === "direct" ? "Langsung" : "Estafet"}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs md:text-sm text-muted-foreground">Jenis: {order.delivery_type === "direct" ? "Langsung" : "Estafet"}</p>
+                      <p className="text-xs md:text-sm text-muted-foreground">
                         {new Date(order.created_at).toLocaleDateString("id-ID")}
                       </p>
                     </div>
                     {order.total_price && (
-                      <p className="text-xl font-bold text-primary">
+                      <p className="text-lg md:text-xl font-bold text-primary">
                         Rp {order.total_price.toLocaleString("id-ID")}
                       </p>
                     )}

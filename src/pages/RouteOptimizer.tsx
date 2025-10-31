@@ -92,31 +92,31 @@ const RouteOptimizer = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
-            <ArrowLeft className="h-5 w-5" />
+        <div className="container mx-auto px-4 py-3 md:py-4 flex items-center gap-2 md:gap-4">
+          <Button variant="ghost" size="icon" onClick={() => navigate("/")} className="shrink-0">
+            <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
-          <h1 className="text-2xl font-bold">Optimasi Rute Multi-Tujuan</h1>
+          <h1 className="text-base md:text-2xl font-bold">Optimasi Rute Multi-Tujuan</h1>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <main className="container mx-auto px-4 py-4 md:py-8 max-w-4xl">
         <Card className="shadow-xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Navigation className="h-5 w-5 text-primary" />
+          <CardHeader className="p-4 md:p-6">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+              <Navigation className="h-4 w-4 md:h-5 md:w-5 text-primary" />
               Input Tujuan Pengiriman
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-xs md:text-sm">
               Masukkan hingga 10 alamat tujuan. AI akan mengoptimalkan urutan rute terdekat untuk Anda.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="space-y-4">
+          <CardContent className="space-y-4 md:space-y-6 p-4 md:p-6">
+            <div className="space-y-3 md:space-y-4">
               {destinations.map((destination, index) => (
                 <div key={destination.id} className="flex gap-2 items-start">
-                  <div className="flex-1 space-y-2">
-                    <Label htmlFor={`destination-${destination.id}`}>
+                  <div className="flex-1 space-y-1.5 md:space-y-2">
+                    <Label htmlFor={`destination-${destination.id}`} className="text-xs md:text-sm">
                       Tujuan {index + 1}
                     </Label>
                     <Input
@@ -124,6 +124,7 @@ const RouteOptimizer = () => {
                       placeholder="Masukkan alamat tujuan"
                       value={destination.address}
                       onChange={(e) => updateDestination(destination.id, e.target.value)}
+                      className="text-sm"
                     />
                   </div>
                   {destinations.length > 1 && (
@@ -131,53 +132,55 @@ const RouteOptimizer = () => {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeDestination(destination.id)}
-                      className="mt-8"
+                      className="mt-6 md:mt-8 h-8 w-8 md:h-10 md:w-10 shrink-0"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3 w-3 md:h-4 md:w-4" />
                     </Button>
                   )}
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 variant="outline"
                 onClick={addDestination}
                 disabled={destinations.length >= 10}
                 className="flex-1"
+                size="sm"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Tambah Tujuan ({destinations.length}/10)
+                <span className="text-xs md:text-sm">Tambah Tujuan ({destinations.length}/10)</span>
               </Button>
               <Button
                 onClick={optimizeRoute}
                 disabled={optimizing || destinations.filter((d) => d.address.trim()).length < 2}
                 className="flex-1"
+                size="sm"
               >
                 <Sparkles className="h-4 w-4 mr-2" />
-                {optimizing ? "Mengoptimalkan..." : "Optimalkan Rute"}
+                <span className="text-xs md:text-sm">{optimizing ? "Mengoptimalkan..." : "Optimalkan Rute"}</span>
               </Button>
             </div>
 
             {optimizedRoute.length > 0 && (
               <Card className="bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-primary" />
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="text-base md:text-lg flex items-center gap-2">
+                    <MapPin className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                     Rute Optimal
                   </CardTitle>
-                  <CardDescription>Urutan pengiriman yang paling efisien</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Urutan pengiriman yang paling efisien</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ol className="space-y-3">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <ol className="space-y-2 md:space-y-3">
                     {optimizedRoute.map((destination, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold">
+                      <li key={index} className="flex items-start gap-2 md:gap-3">
+                        <div className="flex h-6 w-6 md:h-8 md:w-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground font-semibold text-xs md:text-sm">
                           {index + 1}
                         </div>
-                        <div className="flex-1 pt-1">
-                          <p className="font-medium">{destination}</p>
+                        <div className="flex-1 pt-0.5 md:pt-1">
+                          <p className="font-medium text-xs md:text-sm">{destination}</p>
                         </div>
                       </li>
                     ))}

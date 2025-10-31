@@ -82,74 +82,74 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Kurir Manager
+        <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center gap-2">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg md:text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent truncate">
+              Kurir Pintar
             </h1>
-            <p className="text-sm text-muted-foreground">{user?.email}</p>
+            <p className="text-xs md:text-sm text-muted-foreground truncate">{user?.email}</p>
           </div>
-          <Button variant="outline" size="sm" onClick={handleLogout}>
-            <LogOut className="h-4 w-4 mr-2" />
-            Keluar
+          <Button variant="outline" size="sm" onClick={handleLogout} className="shrink-0">
+            <LogOut className="h-4 w-4 md:mr-2" />
+            <span className="hidden md:inline">Keluar</span>
           </Button>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      <main className="container mx-auto px-4 py-4 md:py-8">
+        <div className="grid gap-3 md:gap-6 grid-cols-2 lg:grid-cols-4 mb-4 md:mb-8">
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total Pesanan</CardTitle>
-              <Package className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Total Pesanan</CardTitle>
+              <Package className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">{stats.totalOrders}</div>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold text-primary">{stats.totalOrders}</div>
             </CardContent>
           </Card>
 
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Pesanan Aktif</CardTitle>
-              <TrendingUp className="h-4 w-4 text-accent" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Pesanan Aktif</CardTitle>
+              <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-accent" />
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-accent">{stats.activeOrders}</div>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold text-accent">{stats.activeOrders}</div>
             </CardContent>
           </Card>
 
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total Pelanggan</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Total Pelanggan</CardTitle>
+              <Users className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold">{stats.totalCustomers}</div>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold">{stats.totalCustomers}</div>
             </CardContent>
           </Card>
 
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Selesai Hari Ini</CardTitle>
-              <MapPin className="h-4 w-4 text-primary" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Selesai Hari Ini</CardTitle>
+              <MapPin className="h-3 w-3 md:h-4 md:w-4 text-primary" />
             </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-primary">{stats.completedToday}</div>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold text-primary">{stats.completedToday}</div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/orders")}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Package className="h-5 w-5 text-primary" />
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <Package className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 Kelola Pesanan
               </CardTitle>
-              <CardDescription>Tambah, lihat, dan update status pesanan</CardDescription>
+              <CardDescription className="text-xs md:text-sm">Tambah, lihat, dan update status pesanan</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="outline">
+            <CardContent className="p-4 md:p-6 pt-0">
+              <Button className="w-full" variant="outline" size="sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Buat Pesanan Baru
               </Button>
@@ -157,31 +157,31 @@ const Dashboard = () => {
           </Card>
 
           <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/customers")}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-primary" />
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <Users className="h-4 w-4 md:h-5 md:w-5 text-primary" />
                 Database Pelanggan
               </CardTitle>
-              <CardDescription>Kelola kontak pelanggan Anda</CardDescription>
+              <CardDescription className="text-xs md:text-sm">Kelola kontak pelanggan Anda</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="outline">
+            <CardContent className="p-4 md:p-6 pt-0">
+              <Button className="w-full" variant="outline" size="sm">
                 <Plus className="h-4 w-4 mr-2" />
                 Tambah Pelanggan
               </Button>
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/route-optimizer")}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-accent" />
+          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer md:col-span-2 lg:col-span-1" onClick={() => navigate("/route-optimizer")}>
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-accent" />
                 Optimasi Rute
               </CardTitle>
-              <CardDescription>AI untuk rute multi-tujuan terdekat</CardDescription>
+              <CardDescription className="text-xs md:text-sm">AI untuk rute multi-tujuan terdekat</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Button className="w-full" variant="default">
+            <CardContent className="p-4 md:p-6 pt-0">
+              <Button className="w-full" variant="default" size="sm">
                 Optimalkan Rute
               </Button>
             </CardContent>

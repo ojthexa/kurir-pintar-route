@@ -68,7 +68,7 @@ const Auth = () => {
               <Truck className="h-8 w-8 text-primary-foreground" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Kurir Manager</CardTitle>
+          <CardTitle className="text-2xl font-bold">Kurir Pintar</CardTitle>
           <CardDescription>Kelola pesanan kurir Anda dengan mudah</CardDescription>
         </CardHeader>
         <CardContent>
