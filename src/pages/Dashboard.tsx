@@ -14,6 +14,8 @@ const Dashboard = () => {
     activeOrders: 0,
     totalCustomers: 0,
     completedToday: 0,
+    todayRevenue: 0,
+    totalRevenue: 0,
   });
   const navigate = useNavigate();
 
@@ -62,11 +64,25 @@ const Dashboard = () => {
         .eq("status", "delivered")
         .gte("updated_at", today);
 
+      const allOrders = await supabase
+        .from("orders")
+        .select("total_price");
+
+      const todayOrders = await supabase
+        .from("orders")
+        .select("total_price")
+        .gte("created_at", today);
+
+      const totalRevenue = allOrders.data?.reduce((sum, order) => sum + (Number(order.total_price) || 0), 0) || 0;
+      const todayRevenue = todayOrders.data?.reduce((sum, order) => sum + (Number(order.total_price) || 0), 0) || 0;
+
       setStats({
         totalOrders: ordersResult.count || 0,
         activeOrders: activeOrders.count || 0,
         totalCustomers: customersResult.count || 0,
         completedToday: completedToday.count || 0,
+        todayRevenue,
+        totalRevenue,
       });
     } catch (error) {
       console.error("Error loading stats:", error);
@@ -97,18 +113,11 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-4 md:py-8">
-        <div className="grid gap-3 md:gap-6 grid-cols-2 lg:grid-cols-4 mb-4 md:mb-8">
-          <Card className="shadow-lg hover:shadow-xl transition-shadow">
-            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Total Pesanan</CardTitle>
-              <Package className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent className="p-3 md:p-6 pt-0">
-              <div className="text-xl md:text-3xl font-bold text-primary">{stats.totalOrders}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+        <div className="grid gap-3 md:gap-6 grid-cols-2 lg:grid-cols-3 mb-4 md:mb-8">
+          <Card 
+            className="shadow-lg hover:shadow-xl transition-all cursor-pointer" 
+            onClick={() => navigate("/orders")}
+          >
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
               <CardTitle className="text-xs md:text-sm font-medium">Pesanan Aktif</CardTitle>
               <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-accent" />
@@ -118,7 +127,36 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+          <Card 
+            className="shadow-lg hover:shadow-xl transition-all cursor-pointer" 
+            onClick={() => navigate("/orders")}
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Selesai Hari Ini</CardTitle>
+              <Package className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            </CardHeader>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold text-primary">{stats.completedToday}</div>
+            </CardContent>
+          </Card>
+
+          <Card 
+            className="shadow-lg hover:shadow-xl transition-all cursor-pointer" 
+            onClick={() => navigate("/orders")}
+          >
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Total Pesanan</CardTitle>
+              <Package className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-xl md:text-3xl font-bold">{stats.totalOrders}</div>
+            </CardContent>
+          </Card>
+
+          <Card 
+            className="shadow-lg hover:shadow-xl transition-all cursor-pointer" 
+            onClick={() => navigate("/customers")}
+          >
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
               <CardTitle className="text-xs md:text-sm font-medium">Total Pelanggan</CardTitle>
               <Users className="h-3 w-3 md:h-4 md:w-4 text-muted-foreground" />
@@ -130,16 +168,30 @@ const Dashboard = () => {
 
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
             <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
-              <CardTitle className="text-xs md:text-sm font-medium">Selesai Hari Ini</CardTitle>
-              <MapPin className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+              <CardTitle className="text-xs md:text-sm font-medium">Pendapatan Hari Ini</CardTitle>
+              <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-accent" />
             </CardHeader>
             <CardContent className="p-3 md:p-6 pt-0">
-              <div className="text-xl md:text-3xl font-bold text-primary">{stats.completedToday}</div>
+              <div className="text-lg md:text-2xl font-bold text-accent">
+                Rp {stats.todayRevenue.toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 md:p-6">
+              <CardTitle className="text-xs md:text-sm font-medium">Pendapatan Total</CardTitle>
+              <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-primary" />
+            </CardHeader>
+            <CardContent className="p-3 md:p-6 pt-0">
+              <div className="text-lg md:text-2xl font-bold text-primary">
+                Rp {stats.totalRevenue.toLocaleString()}
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="grid gap-3 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/orders")}>
             <CardHeader className="p-4 md:p-6">
               <CardTitle className="flex items-center gap-2 text-base md:text-lg">
@@ -172,7 +224,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer md:col-span-2 lg:col-span-1" onClick={() => navigate("/route-optimizer")}>
+          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/route-optimizer")}>
             <CardHeader className="p-4 md:p-6">
               <CardTitle className="flex items-center gap-2 text-base md:text-lg">
                 <MapPin className="h-4 w-4 md:h-5 md:w-5 text-accent" />
@@ -183,6 +235,21 @@ const Dashboard = () => {
             <CardContent className="p-4 md:p-6 pt-0">
               <Button className="w-full" variant="default" size="sm">
                 Optimalkan Rute
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/pricing")}>
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <TrendingUp className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+                Kelola Tarif
+              </CardTitle>
+              <CardDescription className="text-xs md:text-sm">Atur tarif pengiriman berdasarkan jarak</CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 md:p-6 pt-0">
+              <Button className="w-full" variant="outline" size="sm">
+                Kelola Tarif
               </Button>
             </CardContent>
           </Card>
