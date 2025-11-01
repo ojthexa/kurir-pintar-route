@@ -201,7 +201,6 @@ const NewOrder = () => {
                     <SelectValue placeholder="Pilih pelanggan..." />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Tidak ada</SelectItem>
                     {customers.map((customer) => (
                       <SelectItem key={customer.id} value={customer.id}>
                         {customer.name} - {customer.phone}
