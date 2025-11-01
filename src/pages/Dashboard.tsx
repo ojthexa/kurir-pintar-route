@@ -224,21 +224,6 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/route-optimizer")}>
-            <CardHeader className="p-4 md:p-6">
-              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
-                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-accent" />
-                Optimasi Rute
-              </CardTitle>
-              <CardDescription className="text-xs md:text-sm">AI untuk rute multi-tujuan terdekat</CardDescription>
-            </CardHeader>
-            <CardContent className="p-4 md:p-6 pt-0">
-              <Button className="w-full" variant="default" size="sm">
-                Optimalkan Rute
-              </Button>
-            </CardContent>
-          </Card>
-
           <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/pricing")}>
             <CardHeader className="p-4 md:p-6">
               <CardTitle className="flex items-center gap-2 text-base md:text-lg">
@@ -250,6 +235,21 @@ const Dashboard = () => {
             <CardContent className="p-4 md:p-6 pt-0">
               <Button className="w-full" variant="outline" size="sm">
                 Kelola Tarif
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="shadow-lg hover:shadow-xl transition-all cursor-pointer" onClick={() => navigate("/route-optimizer")}>
+            <CardHeader className="p-4 md:p-6">
+              <CardTitle className="flex items-center gap-2 text-base md:text-lg">
+                <MapPin className="h-4 w-4 md:h-5 md:w-5 text-accent" />
+                Optimasi Rute
+              </CardTitle>
+              <CardDescription className="text-xs md:text-sm">AI untuk rute multi-tujuan terdekat</CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 md:p-6 pt-0">
+              <Button className="w-full" variant="default" size="sm">
+                Optimalkan Rute
               </Button>
             </CardContent>
           </Card>
